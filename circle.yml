@@ -1,0 +1,19 @@
+machine:
+  pre:
+    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
+  python:
+    version: 3.5.0
+  services:
+    - docker
+
+dependencies:
+  pre:
+    - pip install --upgrade pip
+  override:
+    - pip install -r ./requirements.txt
+
+test:
+  pre:
+    - flake8 .
+  override:
+      - PYTHONPATH=. py.test -v tests/*
